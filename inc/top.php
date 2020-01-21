@@ -1,3 +1,24 @@
+<?php
+	session_start();
+	require_once('db.php');
+	$user = "";
+	if(isset($_SESSION['teacher'])){
+		$userType = 'teacher';
+		$user = $_SESSION['teacher'];
+		$qr = mysqli_query($con, "SELECT * FROM teacher_register WHERE email = '$user'");
+		$row = mysqli_fetch_array($qr);
+		$name = $row['name'];	
+	}
+	else if(isset($_SESSION['student'])){
+		$userType = 'student';
+		$user = $_SESSION['student'];
+		$qr = mysqli_query($con, "SELECT * FROM student_register WHERE email = '$user'");
+		$row = mysqli_fetch_array($qr);
+		$name = $row['name'];	
+		$studentClass = $row['class'];
+		$studentSection = $row['section'];
+	}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +30,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 </head>
 <body>
 	
@@ -20,8 +42,20 @@
 		      <!-- TOP LEFT -->
 		      <div class="col-md-5 col-sm-6">
 		        <div class="top-address uppernav">
+				<?php
+					if(!empty($user)){
+				?>
+				<a href="#" class=""><i class="fa fa-user"></i> <?php echo $name;?></a>
+				<a href="logout.php"><i class="fa fa-power-off"></i> Log Out</a>
+				<?php
+					}
+					else{
+				?>
 		          <a href="login.php" class=""><i class="fa fa-user"></i> Login</a>
 			  	  <a href="signup.php">Sign Up</a>
+				<?php
+					}
+				?>
 		        </div>
 		      </div>
 		      <div class="col-md-3 col-sm-3">
@@ -55,11 +89,11 @@
 			<div class="topnav" id="myTopnav">
 			  <a><b class="logo2">Online Classroom</b></a>
               <a href="index.php" class="nav_content">Home</a>
-              <a href="index.php" class="nav_content">Online Exams</a>
-              <a href="index.php" class="nav_content">Tasks</a>
-			  <a href="" class="nav_content">Attendence</a>
-			  <a href="" class="nav_content">Resources</a>
-			  <a href="" class="nav_content">Q & A</a>
+              <a href="online_exams.php" class="nav_content">Online Exams</a>
+              <a href="tasks.php" class="nav_content">Tasks</a>
+			  <a href="attendance.php" class="nav_content">Attendance</a>
+			  <a href="resource.php" class="nav_content">Resources</a>
+			  <a href="qa.php" class="nav_content">Q & A</a>
 			  
 			  <!-- CODE FOR DROPDOWN IF NEEDED
 			  <div class="dropdownx">

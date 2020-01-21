@@ -1,5 +1,80 @@
 <?php
 	require_once('inc/top.php');
+	if(isset($_SESSION['teacher'])){
+		header('Location: index.php'); 
+	}
+	else if(isset($_SESSION['student'])){
+		header('Location: index.php'); 
+	}
+	if(isset($_POST['submit'])){
+		
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$userType = $_POST['userType'];
+		$msg = "";
+		if($userType=="Teacher"){
+		
+			$qr = "SELECT * FROM teacher_register WHERE email = '$email'";
+			$rn = mysqli_query($con,$qr);
+			$row = mysqli_fetch_array($rn);
+
+			$db_user = $row['email'];
+			$db_pass = $row['password'];
+			if($db_user===$email){
+				if($db_pass===$password){
+					$msg = "<div class='alertSuccess'>
+					<i class='fa fa-times'></i> Username and Password matched!
+			</div>";
+					$_SESSION['teacher']=$db_user;
+					header('Location: index.php');    
+				}
+				else{
+					$msg = "<div class='alertDanger'>
+					<i class='fa fa-times'></i> Password Doesn't match!
+			</div>";
+					
+				} 
+			}
+			else{
+				$msg = "<div class='alertDanger'>
+					<i class='fa fa-times'></i> Email Doesn't match!
+			</div>";
+			}
+
+		}
+		else if($userType == "Student"){
+		
+			$qr = "SELECT * FROM student_register WHERE email = '$email'";
+			$rn = mysqli_query($con,$qr);
+			$row = mysqli_fetch_array($rn);
+
+			$db_user = $row['email'];
+			$db_pass = $row['password'];
+			if($db_user===$email){
+				if($db_pass===$password){
+					$msg = "<div class='alertSuccess'>
+					<i class='fa fa-times'></i> Username and Password matched!
+			</div>";
+					$_SESSION['student']=$db_user;
+					header('Location: index.php');    
+				}
+				else{
+					$msg = "<div class='alertDanger'>
+					<i class='fa fa-times'></i> Password Doesn't match!
+			</div>";
+					
+				} 
+			}
+			else{
+				$msg = "<div class='alertDanger'>
+					<i class='fa fa-times'></i> Email Doesn't match!
+			</div>";
+			}
+		
+		}
+		
+	}
+
 ?>
 
 
@@ -11,47 +86,30 @@
 	<!--Please, place all your div/box/anything inside the above SECTION-->
 	<div class="section" style="">
 		<div class="box30">
-
-			<!--For Alert Messages Use the Following-->
-			<!--Error / UnSuccessful Event
-			
-			 <div class="alertDanger">
-			  	<i class="fa fa-times"></i> Type The Message Here
-			 </div>
-
-			-->
-
-			<!--Successful Event / Success Message
-
-			 <div class="alertSuccess">
-			  	<i class="fa fa-check"></i> Type The Message Here
-			 </div>
-
-			-->
+			<?php 
+				if(isset($msg))echo $msg;
+			?>
 			 <h5 class="boxHeader">Login:</h5>
 			 
 			 <form method="post">
 			 	<label for="email">Email:</label>
-			 	<input required id="email" type="email" name="email" placeholder="Enter your email" class="form-control" autocomplete="off">
+			 	<input required id="email" type="email" name="email" placeholder="Enter your email" class="form-control" >
 			 	<br>
 			 	<label for="password">Password:</label>
 			 	<input required id="password" type="password" name="password" placeholder="Enter your password"  class="form-control">
 			 	<br>
-			 	<div class="user-option">
-					<div class="checkbox pull-left">
-						<label><input type="checkbox" name="remember_me" value="yes"> Remember me</label>
-					</div>
-					<div class="pull-right forgot-password">
-						<a href="#">Forgot password?</a>
-					</div>
-				</div>
+				<label for="userType">User Type:</label>
+				<select required id="userType" name="userType" class="form-control">
+					<option value="Teacher">Teacher</option>
+					<option value="Student">Student</option>
+				</select>
 				<br>
 				<br>
-			 	<button type="submit" id="loginBtn" class="btn btn-success">Login</button>
+			 	<button type="submit" name="submit" id="loginBtn" class="btn btn-success">Login</button>
 			 </form>
 		</div>
 		<br>
-		<center><a href="signup.html" class="btn btn-primary createAccountButton">Create New Account</button></a>
+		<center><a href="signup.php" class="btn btn-primary createAccountButton">Create New Account</button></a>
 	</div>
 	<!--Please, place all your div/box/anything inside the above SECTION-->
 

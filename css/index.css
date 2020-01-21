@@ -6,8 +6,105 @@ body {
   background-color: #f3f3f3;
 }
 label{
-  color: #7f7f7f;
+  color:#000;
   font-weight: bold;
+}
+.hoverEffect{
+    transition: 0.5s;
+    cursor: pointer;
+}
+.hoverEffect:hover{
+    -moz-box-shadow: 0 0 13px #999;
+    -webkit-box-shadow: 0 0 13px #999;
+    box-shadow: 0 0 13px #999;
+}
+
+/*Review CSS*/
+.reviewBox p{
+    padding-top:15px;
+    font-style:italic;
+  }
+  .reviewBox{
+    width:100%;
+    padding-left: 80px;
+    padding-right: 25px;
+    border: 1px solid #e5e5e5;
+    padding-bottom:10px;
+    min-height: 50px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    position:relative;
+    background:#fff;
+    border-left: 4px solid #1B6DC1;
+  }
+  .reviewBox:after{
+    content: '';
+      width: 1px;
+      height: 149px;
+      position: absolute;
+      left: -2px;
+      top: -1px;
+  }
+  .quoteSignOne{
+    position:relative;
+  }
+  .quoteSignOne:after{
+    content: '';
+      border: 1px solid #1B6DC1;
+      background: #1B6DC1;
+      width: 12px;
+      height: 25px;
+      position: absolute;
+      left: -50px;
+      top: 35px;
+  }
+  .quoteSignOne:before{
+    content: '';
+      border-left: 13px solid transparent;
+      border-top: 13px solid #ffffff;
+      position: absolute;
+      left: -48px;
+      top: 35px;
+      z-index: 1;
+  }
+  .quoteSignTwo{
+    position:relative;
+  }
+  .quoteSignTwo:after{
+    content: '';
+    border: 1px solid #1B6DC1;
+      background: #1B6DC1;
+      width: 12px;
+      height: 25px;
+      position: absolute;
+      left: -30px;
+      top: 35px;
+  }
+  .quoteSignTwo:before{
+    content: '';
+      border-left: 12px solid transparent;
+      border-top: 12px solid #ffffff;
+      position: absolute;
+      left: -28px;
+      top: 35px;
+      z-index: 1;
+  }
+  .reviewBox h1{
+    font-size:14px;
+    font-weight:500;
+    color:#797979;
+    font-family: 'Lato', sans-serif;
+    margin-top:0px;
+    
+  }
+  .reviewBox h1 span{
+    margin:0 2px 0 2px;
+  }
+/*Review CSS*/
+.attendance_name_list{
+  padding: 20px;
+  background: #A7CDF2;
+  color: #156D42;
 }
 .alertDanger{
   padding: 5px 5px;
@@ -28,7 +125,23 @@ label{
   margin-bottom: 10px;
 }
 
-
+.box2nd80{
+  background: white; width: 80%; margin:15px auto; padding: 0px; -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;font-family: Helvetica; 
+  border-radius: 5px;
+  transition: 0.5s;
+}
+.box2ndHeader{
+  background-color: #6495ED ;
+  color:#000;
+  padding: 8px 18px;
+  border-radius: 5px 5px 0px 0px;
+}
+.boxSpan{
+  color:#fff;
+  float: right;
+}
 .box80{
   background: white; width: 80%; margin:0 auto; padding: 30px 35px; -moz-box-shadow: 0 0 5px #999;
   -webkit-box-shadow: 0 0 5px #999;
@@ -493,6 +606,9 @@ label{
     padding-top: 70px;
     padding-bottom: 650px;
     min-height: 1000px;
+  }
+  .box2nd80{
+    width: 90%;
   }
   .box80{
     width: 95%; padding: 20px 30px;
