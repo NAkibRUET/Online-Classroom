@@ -1,14 +1,154 @@
 body {
   position: relative;
   min-height: 100%;
+  width: 100%;
   margin: 0;
   font-family: 'Kalpurush', Arial, Helvetica, sans-serif !important;
   background-color: #f3f3f3;
+}
+html {
+  scroll-behavior: smooth;
 }
 label{
   color:#000;
   font-weight: bold;
 }
+/*Chat box*/
+.chat1{
+  color: white;
+  display: block;
+  width: 70%;
+  padding: 7px 14px;
+  background: purple; /* Old browsers */
+
+  border-radius: 17px;
+  margin-bottom: 5px;
+  
+}
+.chat2{
+  background: #7FFF00; /* Old browsers */
+  
+  border-radius: 17px;
+  margin:3px 0px;
+  
+  color:white;
+  padding: 7px 14px;
+  text-align: left;
+  width: 70%;
+  margin-left: 30%;
+  display: block;
+}
+.chat_window {
+  /*position: absolute;
+  width: calc(100% - 25px);
+  max-width: 800px;
+  height: 50%;
+  */
+  height: 480px;
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 10px;
+  
+  /*left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);*/
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  background-color: #E6F5FF;
+  overflow: hidden;
+}
+
+.top_menu {
+  background-color: #fff;
+  width: 100%;
+  padding:10px;
+  box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+}
+.top_menu .buttons {
+  margin: 3px 0 0 20px;
+  position: absolute;
+}
+.top_menu .buttons .button {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 10px;
+  position: relative;
+}
+.top_menu .title {
+  text-align: center;
+  font-size: 22px;
+}
+
+#messages {
+  position: relative;
+  list-style: none;
+  padding: 20px 10px 0 10px;
+  margin: 0;
+  height: 347px;
+  overflow: scroll;
+}
+.messages .message {
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 20px;
+  transition: all 0.5s linear;
+  opacity: 0;
+}
+.bottom_wrapper {
+  /*position: relative;*/
+  width: 100%;
+  background-color: #fff;
+  padding: 10px 8px;
+  /*position: absolute;*/
+  /*bottom: 0;*/
+}
+.bottom_wrapper .message_input_wrapper {
+  display: inline-block;
+  height: 50px;
+  
+  
+  width: 80%;
+  position: relative;
+  padding: 0 20px;
+}
+.bottom_wrapper .message_input_wrapper .message_input {
+  border: none;
+  height: 100%;
+  box-sizing: border-box;
+  width: 90%;
+  position: absolute;
+  outline-width: 0;
+  color: gray;
+}
+.bottom_wrapper .send_message {
+  width: 140px;
+  height: 50px;
+  display: inline-block;
+  border-radius: 50px;
+  background-color: #a3d063;
+  border: 2px solid #a3d063;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  text-align: center;
+  float: right;
+}
+.bottom_wrapper .send_message:hover {
+  color: #a3d063;
+  background-color: #fff;
+}
+.bottom_wrapper .send_message .text {
+  font-size: 18px;
+  font-weight: 300;
+  display: inline-block;
+  line-height: 48px;
+}
+
+.message_template {
+  display: none;
+}
+/*Chat box*/
 .hoverEffect{
     transition: 0.5s;
     cursor: pointer;
@@ -24,9 +164,26 @@ label{
     padding-top:15px;
     font-style:italic;
   }
+  .reviewBox2 p{
+    padding-top:10px;
+    
+  }
   .reviewBox{
     width:100%;
     padding-left: 80px;
+    padding-right: 25px;
+    border: 1px solid #e5e5e5;
+    padding-bottom:10px;
+    min-height: 50px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    position:relative;
+    background:#fff;
+    border-left: 4px solid #1B6DC1;
+  }
+  .reviewBox2{
+    width:100%;
+    padding-left: 30px;
     padding-right: 25px;
     border: 1px solid #e5e5e5;
     padding-bottom:10px;
@@ -100,6 +257,17 @@ label{
   .reviewBox h1 span{
     margin:0 2px 0 2px;
   }
+  .reviewBox2 h1{
+    font-size:14px;
+    font-weight:500;
+    color:#797979;
+    font-family: 'Lato', sans-serif;
+    margin-top:0px;
+    
+  }
+  .reviewBox2 h1 span{
+    margin:0 2px 0 2px;
+  }
 /*Review CSS*/
 .attendance_name_list{
   padding: 20px;
@@ -124,7 +292,20 @@ label{
   border: 0.5px solid #99ff99;
   margin-bottom: 10px;
 }
-
+.box2nd95{
+  background: white; width: 100%;  padding: 0px; -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;font-family: Helvetica; 
+  border-radius: 5px;
+  transition: 0.5s;
+}
+.box2nd90{
+  background: white; width: 90%; margin:15px auto; padding: 0px; -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;font-family: Helvetica; 
+  border-radius: 5px;
+  transition: 0.5s;
+}
 .box2nd80{
   background: white; width: 80%; margin:15px auto; padding: 0px; -moz-box-shadow: 0 0 5px #999;
   -webkit-box-shadow: 0 0 5px #999;
@@ -141,6 +322,11 @@ label{
 .boxSpan{
   color:#fff;
   float: right;
+}
+.box90{
+  background: white; width: 90%; margin:0 auto; padding: 30px 35px; -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;font-family: Helvetica;
 }
 .box80{
   background: white; width: 80%; margin:0 auto; padding: 30px 35px; -moz-box-shadow: 0 0 5px #999;
@@ -387,7 +573,7 @@ label{
   position: absolute; right: 0; bottom: 0; left: 0;  text-align: center;
 }
 .footer .footerOne{
-  background-image: url('../f4.png'); 
+  background-image: url('../img/f4.png'); 
   background-size: 100% 100%; 
   padding-bottom: 10px; 
   box-shadow: 0 -5px 8px -5px rgba(0,0,0,0.2); 
@@ -558,11 +744,11 @@ label{
   .img_slider{
     height: 250px;
   }
+  .hideElem{
+    display: none;
+  }
 }
-.social a{
-  padding: 10px 10px;
-  color: white;
-}
+
 @media screen and (max-width: 520px) {
   .box80{
     width: 95%; padding: 30px 35px;
@@ -597,10 +783,7 @@ label{
     height: 250px;
   }
 }
-.social a{
-  padding: 10px 10px;
-  color: white;
-}
+
 @media screen and (max-width: 420px) {
   .section{
     padding-top: 70px;

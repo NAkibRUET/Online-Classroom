@@ -9,7 +9,13 @@
 		$conPass = $_POST['TRetypePassword'];
 		if($pass == $conPass){
 			$check = mysqli_query($con, "SELECT * FROM teacher_register WHERE email = '$Temail'");
+			$check2 = mysqli_query($con, "SELECT * FROM student_register WHERE email = '$Temail'");
 			if(mysqli_num_rows($check)>0){
+				$msg = "<div class='alertDanger'>
+					<i class='fa fa-times'></i> An account with this email already exists!
+			</div>";	
+			}
+			else if(mysqli_num_rows($check2)>0){
 				$msg = "<div class='alertDanger'>
 					<i class='fa fa-times'></i> An account with this email already exists!
 			</div>";	
@@ -18,7 +24,7 @@
 				$qr = mysqli_query($con, "INSERT INTO `teacher_register` (`id`, `name`, `email`, `designation`, `password`) VALUES (NULL, '$nameOfTeacher', '$Temail', '$designation', '$pass');");
 				if($qr){
 					$msg = "<div class='alertSuccess'>
-						<i class='fa fa-times'></i> Successfully Registered, Please Login.
+						<i class='fa fa-check'></i> Successfully Registered, Please Login.
 				</div>";
 				}
 				else{
@@ -44,7 +50,13 @@
 		$conPass = $_POST['RetypePassword'];
 		if($pass == $conPass){
 			$check = mysqli_query($con, "SELECT * FROM student_register WHERE email = '$email'");
+			$check2 = mysqli_query($con, "SELECT * FROM teacher_register WHERE email = '$email'");
 			if(mysqli_num_rows($check)>0){
+				$msg = "<div class='alertDanger'>
+					<i class='fa fa-times'></i> An account with this email already exists!
+			</div>";	
+			}
+			else if(mysqli_num_rows($check2)>0){
 				$msg = "<div class='alertDanger'>
 					<i class='fa fa-times'></i> An account with this email already exists!
 			</div>";	

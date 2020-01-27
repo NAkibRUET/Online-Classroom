@@ -23,7 +23,7 @@
 			if($db_user===$email){
 				if($db_pass===$password){
 					$msg = "<div class='alertSuccess'>
-					<i class='fa fa-times'></i> Username and Password matched!
+					<i class='fa fa-check'></i> Username and Password matched!
 			</div>";
 					$_SESSION['teacher']=$db_user;
 					header('Location: index.php');    
@@ -104,7 +104,7 @@
 					<option value="Student">Student</option>
 				</select>
 				<br>
-				<br>
+				
 			 	<button type="submit" name="submit" id="loginBtn" class="btn btn-success">Login</button>
 			 </form>
 		</div>
