@@ -323,6 +323,11 @@ label{
   color:#fff;
   float: right;
 }
+.sliderBox{
+    background: white; width: 90%; margin:0 auto; padding: 10px; -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;font-family: Helvetica;
+}
 .box90{
   background: white; width: 90%; margin:0 auto; padding: 30px 35px; -moz-box-shadow: 0 0 5px #999;
   -webkit-box-shadow: 0 0 5px #999;

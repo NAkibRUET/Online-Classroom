@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 27, 2020 at 07:16 PM
+-- Generation Time: Jan 30, 2020 at 03:23 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.10
 
@@ -25,6 +25,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `answer_submit`
+--
+
+DROP TABLE IF EXISTS `answer_submit`;
+CREATE TABLE IF NOT EXISTS `answer_submit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exam_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `student` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correct` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `attendance_info`
 --
 
@@ -35,14 +52,15 @@ CREATE TABLE IF NOT EXISTS `attendance_info` (
   `class` varchar(110) COLLATE utf8mb4_unicode_ci NOT NULL,
   `section` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `attendance_info`
 --
 
 INSERT INTO `attendance_info` (`id`, `teacher`, `class`, `section`) VALUES
-(5, 'boshir@gmail.com', 'Level 4 Term 2', 'A');
+(5, 'boshir@gmail.com', 'Level 4 Term 2', 'A'),
+(6, 'boshir@gmail.com', 'Level 2 Term 2', 'B');
 
 -- --------------------------------------------------------
 
@@ -65,6 +83,63 @@ CREATE TABLE IF NOT EXISTS `daily_attendance` (
 
 INSERT INTO `daily_attendance` (`id`, `a_id`, `data`, `date`) VALUES
 (72, 5, '[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0]', '2020-01-18 18:14:50');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_questions`
+--
+
+DROP TABLE IF EXISTS `exam_questions`;
+CREATE TABLE IF NOT EXISTS `exam_questions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exam_id` int(11) NOT NULL,
+  `q_no` int(11) NOT NULL,
+  `question` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `answer` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `option1` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `option2` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `option3` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `option4` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `end` time NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `online_exam`
+--
+
+DROP TABLE IF EXISTS `online_exam`;
+CREATE TABLE IF NOT EXISTS `online_exam` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `subject` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `teacher` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `class` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `section` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `start` time NOT NULL,
+  `end` time NOT NULL,
+  `date` date NOT NULL,
+  `no_of_question` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `online_exam_result`
+--
+
+DROP TABLE IF EXISTS `online_exam_result`;
+CREATE TABLE IF NOT EXISTS `online_exam_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exam_id` int(11) NOT NULL,
+  `student` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mark` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -147,17 +222,6 @@ CREATE TABLE IF NOT EXISTS `qa_vote` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `qa_vote`
---
-
-INSERT INTO `qa_vote` (`id`, `post_id`, `user`) VALUES
-(11, 16, 'nakib143048@gmail.com'),
-(10, 19, 'nakib143048@gmail.com'),
-(9, 16, 'hussain0296@gmail.com'),
-(8, 17, 'hussain0296@gmail.com'),
-(12, 17, 'nakib143048@gmail.com');
-
 -- --------------------------------------------------------
 
 --
@@ -228,17 +292,6 @@ CREATE TABLE IF NOT EXISTS `resource_vote` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `resource_vote`
---
-
-INSERT INTO `resource_vote` (`id`, `post_id`, `user`) VALUES
-(1, 9, 'hussain0296@gmail.com'),
-(2, 10, 'nakib143048@gmail.com'),
-(3, 11, 'nakib143048@gmail.com'),
-(4, 11, 'hussain0296@gmail.com'),
-(5, 7, 'nakib143048@gmail.com');
-
 -- --------------------------------------------------------
 
 --
@@ -262,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `student_register` (
 --
 
 INSERT INTO `student_register` (`id`, `email`, `name`, `roll`, `class`, `section`, `password`) VALUES
-(1, 'hussain0296@gmail.com', 'Ali Hussain', '68', 'Level 4 Term 2', 'B', '123'),
+(1, 'hussain0296@gmail.com', 'Ali Hussain', '68', 'Level 4 Term 2', 'A', '123'),
 (4, 'nakib143048@gmail.com', 'Nakib Hossain', '48', 'Level 4 Term 2', 'A', '123');
 
 -- --------------------------------------------------------
@@ -283,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `task` (
   `teacher` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `task`

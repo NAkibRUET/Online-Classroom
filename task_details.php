@@ -16,6 +16,26 @@
         $filename = $row['filename'];
         $dealine_date = date('d M', strtotime($row['date']));
         $dealine_time = date('h:i A', strtotime($row['time']));
+        date_default_timezone_set("Asia/Dhaka");
+        $dd = $row['date'];
+        $dt = $row['time'];
+        $current_date = date('Y-m-d');
+        $current_time = date('H:i:s');
+        //echo $current_date;
+        //echo $dd;
+        //echo $dt;
+        //echo $current_time;
+        $fl = 0;
+        if($current_date >= $dd){
+            if($current_date>$dd){
+                $fl = 1;
+            }
+            else if($current_date==$dd){
+                if($current_time>$dt){
+                    $fl = 1;
+                }
+            }   
+        }
         $published = $row['publish'];
         $teacher_info = mysqli_query($con, "SELECT * FROM teacher_register WHERE email = '$poster'");
         $row = mysqli_fetch_array($teacher_info);
@@ -93,12 +113,16 @@
                   <div style="padding: 10px 20px;">
                     <?php if($userType=="student"){?>
                     <?php if(isset($msg))echo $msg; ?>
+                        <?php if($fl==0){?>
                     <form method="post"  enctype="multipart/form-data">
                         <label style="color:blue;" for="file">Submit Task: </label>
                         <input type="file" required id="file" name="rfile" class="form-control-file">    
                         <br>
                         <button type="submit" name="submit" id="commentBtn" class="btn btn-info">Submit</button>
                     </form>
+                        <?php }else{?>
+                        <h5>Submission is closed.</h5>
+                        <?php } ?>
                     <?php } ?>
                   </div>
         		</div>
@@ -149,7 +173,7 @@
                                 }
                             }
                             else{
-                                echo "Nothing Found";
+                                echo "<h5 style='padding:10px 20px; color:#7f7f7f;'>Nothing Found</h5>";
                             }
                         ?>
                       
