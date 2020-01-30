@@ -158,7 +158,20 @@ label{
     -webkit-box-shadow: 0 0 13px #999;
     box-shadow: 0 0 13px #999;
 }
-
+#profileImage {
+  width: 150px;
+  height: 150px;
+  border: 5px solid #fff;
+  background: #1B6DC1;
+  font-size: 75px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  line-height: 150px;
+   -moz-box-shadow: 0 0 5px #999;
+  -webkit-box-shadow: 0 0 5px #999;
+  box-shadow: 0 0 5px #999;font-family: Helvetica; 
+}
 /*Review CSS*/
 .reviewBox p{
     padding-top:15px;

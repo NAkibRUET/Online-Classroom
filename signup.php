@@ -65,7 +65,7 @@
 				$qr = mysqli_query($con, "INSERT INTO `student_register` (`id`, `email`, `name`, `roll`, `class`, `section`, `password`) VALUES (NULL, '$email', '$nameOfUser', '$roll', '$class', '$section', '$pass');");
 				if($qr){
 					$msg = "<div class='alertSuccess'>
-						<i class='fa fa-times'></i> Successfully Registered, Please Login.
+						<i class='fa fa-check'></i> Successfully Registered, Please Login.
 				</div>";
 				}
 				else{

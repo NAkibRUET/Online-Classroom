@@ -7,7 +7,10 @@
 		$user = $_SESSION['teacher'];
 		$qr = mysqli_query($con, "SELECT * FROM teacher_register WHERE email = '$user'");
 		$row = mysqli_fetch_array($qr);
-		$name = $row['name'];	
+		$name = $row['name'];
+		$designation = $row['designation'];
+		$ProfileId = $row['id'];
+
 	}
 	else if(isset($_SESSION['student'])){
 		$userType = 'student';
@@ -17,7 +20,10 @@
 		$name = $row['name'];	
 		$studentClass = $row['class'];
 		$studentSection = $row['section'];
+		$studentRoll = $row['roll'];
+		$ProfileId = $row['id'];
 	}
+	$url_name = str_replace(" ", "-", $name);
 ?>
 <!DOCTYPE html>
 <html>
@@ -49,7 +55,7 @@
 				<?php
 					if(!empty($user)){
 				?>
-				<a href="#" class=""><i class="fa fa-user"></i> <?php echo $name;?></a>
+				<a href="profile.php?name=<?php echo $url_name;?>" class=""><i class="fa fa-user"></i> <?php echo $name;?></a>
 				<a href="logout.php"><i class="fa fa-power-off"></i> Log Out</a>
 				<?php
 					}

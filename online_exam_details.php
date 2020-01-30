@@ -382,6 +382,48 @@ $(document).ready(function(){
                 }
             ?>               
         </div>
+        <br>
+        <?php
+            $qr = mysqli_query($con, "SELECT * FROM online_exam_result WHERE exam_id = '$exam_id'");
+            if(mysqli_num_rows($qr)>0){
+                
+        ?>
+        <div class="box80">
+            <h5 class="boxHeader">Result:</h5>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Roll</th>
+                  <th scope="col">Mark</th>
+                </tr>
+              </thead>
+              <tbody>
+        <?php
+            while($row = mysqli_fetch_array($qr)){
+                $student = $row['student'];
+                $mark = $row['mark'];
+                $student_info = mysqli_query($con, "SELECT * FROM student_register WHERE email = '$student'");
+                $row = mysqli_fetch_array($student_info);
+                $student_name = $row['name'];
+                $student_roll = $row['roll'];
+        ?>
+                <tr>
+                  <th scope="row">1</th>
+                  <td><?php echo $student_name; ?></td>
+                  <td><?php echo $student_roll; ?></td>
+                  <td><?php echo $mark; ?></td>
+                </tr>
+        <?php
+            }
+        ?>
+              </tbody>
+            </table>
+        </div>
+        <?php
+        }
+        ?>
     </div>
     <!--Please, place all your div/box/anything inside the above SECTION-->
 
