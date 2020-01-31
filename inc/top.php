@@ -23,7 +23,7 @@
 		$studentRoll = $row['roll'];
 		$ProfileId = $row['id'];
 	}
-	$url_name = str_replace(" ", "-", $name);
+	if(isset($name))$url_name = str_replace(" ", "-", $name);
 ?>
 <!DOCTYPE html>
 <html>
