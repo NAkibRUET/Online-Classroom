@@ -390,7 +390,7 @@ label{
   height:65px;
 }
 .logo2{
-  margin-right: 300px;
+  margin-right: 290px;
   margin-top: -5px;
   font-size: 20px;
   
@@ -614,7 +614,7 @@ label{
 }
 @media screen and (max-width: 1200px) {
   .logo2{
-    margin-right: 120px;
+    margin-right: 115px;
     margin-top: -5px;
     height:35px;
   }

@@ -97,7 +97,7 @@
 
 		 <div class="container top_three">
 			<div class="topnav" id="myTopnav">
-			  <a><b class="logo2">Online Classroom</b></a>
+			  <a><b class="logo2">Department of CSE</b></a>
               <a href="index.php" class="nav_content">Home</a>
               <a href="online_exams.php" class="nav_content">Online Exams</a>
               <a href="tasks.php" class="nav_content">Tasks</a>
