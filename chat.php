@@ -142,7 +142,7 @@ setInterval(() => {
 
 
 setInterval(() => {
-	//getMessages();
+	//getMessages();  // UnComment this line and in load.php line 51 change DESC to ASC 
         
     }, 1000);
 

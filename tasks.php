@@ -215,7 +215,7 @@
                 <div class="box80" style="margin-top:20px;">
                     <h5 class="boxHeader">Your Tasks:</h5>
                 <?php
-                    $qx = mysqli_query($con, "SELECT * FROM task WHERE class = '$studentClass'");
+                    $qx = mysqli_query($con, "SELECT * FROM task WHERE class = '$studentClass' ORDER By id DESC ");
                     if(mysqli_num_rows($qx)>0){
                         while($row = mysqli_fetch_array($qx)){
                             $id = $row['id'];
@@ -249,8 +249,11 @@
                 </div>
                 <?php
                 }
+
+                if($userType=='teacher'){
                 ?>
                 <a href="tasks.php?showArchive=1"><button class="btn btn-secondary" style="margin-left: 10%">Show Archive</button></a>
+            <?php } ?>
             </div>
             <?php
                 require_once('inc/chatbar.php');

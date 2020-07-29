@@ -7,6 +7,19 @@
         $task_id = $_GET['id'];
     }   
     
+
+
+    if(isset($_POST['publish'])){
+        $publish = mysqli_query($con, "UPDATE `task` SET `publish` = '1' WHERE `task`.`id` = '$task_id';");
+        if(isset($publish)){
+            $task_query2 = mysqli_query($con, "SELECT * FROM `task` WHERE `id` = '$task_id'");
+            $row = mysqli_fetch_array($task_query2);
+            $published = $row['publish'];
+        }
+
+
+    }
+
     $task_query = mysqli_query($con, "SELECT * FROM `task` WHERE `id` = '$task_id'");
     if(mysqli_num_rows($task_query)>0){
         $row = mysqli_fetch_array($task_query);
@@ -44,16 +57,6 @@
         $poster_name = $row['name'];
        
         
-    }
-    if(isset($_POST['publish'])){
-        $publish = mysqli_query($con, "UPDATE `task` SET `publish` = '1' WHERE `task`.`id` = '$task_id';");
-        if($publish){
-            $task_query2 = mysqli_query($con, "SELECT * FROM `task` WHERE `id` = '$task_id'");
-            $row = mysqli_fetch_array($task_query);
-            $published = $row['publish'];
-        }
-
-
     }
     $msg="";
     if(isset($_POST['submit'])){
@@ -98,7 +101,7 @@
         <div class="row">
             <div class="col-md-10">
         		<div class="box2nd90">
-                    
+                    <?php if($userType=="teacher"){ ?>
                     <a href="delete.php?delete_type=task&task_id=<?php echo $task_id; ?>">
                         <button 
                             id="showButton" 
@@ -137,7 +140,7 @@
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </button>
                     </a>
-        		  
+        		  <?php } ?>
                     <h5 class="box2ndHeader">Deadline: <?php echo $dealine_date; ?> <?php echo $dealine_time; ?> </h5>
                     <div style="padding: 20px;">
 
@@ -155,14 +158,20 @@
                       </div>
                   </div>
                   <div style="padding: 10px 20px;">
-                    <?php if($userType=="student"){?>
+                    <?php 
+                        if($userType=="student"){
+                            $checkSubmission = mysqli_query($con, "SELECT * FROM `task_submit` WHERE student = '$user' AND task_id = '$task_id'");
+
+                            
+
+                        ?>
                     <?php if(isset($msg))echo $msg; ?>
                         <?php if($fl==0){?>
                     <form method="post"  enctype="multipart/form-data">
                         <label style="color:blue;" for="file">Submit Task: </label>
                         <input type="file" required id="file" name="rfile" class="form-control-file">    
                         <br>
-                        <button type="submit" name="submit" id="commentBtn" class="btn btn-info">Submit</button>
+                        <button type="submit" name="submit" id="commentBtn" class="btn btn-info" <?php if(mysqli_num_rows($checkSubmission)>0)echo "disabled";  ?>>Submit</button>
                     </form>
                         <?php }else{?>
                         <h5>Submission is closed.</h5>

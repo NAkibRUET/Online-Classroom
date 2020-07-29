@@ -106,11 +106,13 @@
                     </form>
         		</div>
                 <div class="box90" style="margin-top: 20px;">
-                 <h5 class="boxHeader">Share Youtube Video:</h5>
+                    <button id="showButton2" onclick="showForm2()" type="button" style="float:right;" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <button id="hideButton2" onclick="hideForm2()" type="button" style="float:right; display:none" class="btn btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <h5 class="boxHeader">Share Youtube Video:</h5>
                     <?php
                         if(isset($msg2))echo $msg2;
                     ?>
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" id="resourceForm2" style="display:none">
                         <label style="color:blue;" for="ytitle">Title:</label>
                         <input type="text" required id="ytitle" name="yrtitle" class="form-control" placeholder="Write a title for your resource">
                         <br>
@@ -195,6 +197,18 @@
             document.getElementById("resourceForm").style.display = "none"
             document.getElementById("hideButton").style.display = "none"
             document.getElementById("showButton").style.display = "block"
+        }
+
+        function showForm2(){
+            document.getElementById("resourceForm2").style.display = "block"
+            document.getElementById("hideButton2").style.display = "block"
+            document.getElementById("showButton2").style.display = "none"
+        }
+
+        function hideForm2(){
+            document.getElementById("resourceForm2").style.display = "none"
+            document.getElementById("hideButton2").style.display = "none"
+            document.getElementById("showButton2").style.display = "block"
         }
 
     </script>

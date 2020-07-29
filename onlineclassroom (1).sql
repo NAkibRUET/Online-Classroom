@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 29, 2020 at 04:19 PM
+-- Generation Time: Jul 29, 2020 at 08:44 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -71,15 +71,6 @@ CREATE TABLE `attendance_info` (
   `archived` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `attendance_info`
---
-
-INSERT INTO `attendance_info` (`id`, `teacher`, `class`, `section`, `session`, `archived`) VALUES
-(5, 'boshir@gmail.com', 'Level 4 Term 2', 'A', '2015-2016', 1),
-(7, 'boshir@gmail.com', 'Level 4 Term 2', 'A', '2014-15', 0),
-(8, 'boshir@gmail.com', 'Level 4 Term 1', 'A', '2016-17', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -92,14 +83,6 @@ CREATE TABLE `daily_attendance` (
   `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`data`)),
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `daily_attendance`
---
-
-INSERT INTO `daily_attendance` (`id`, `a_id`, `data`, `date`) VALUES
-(72, 5, '[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0]', '2020-01-18 18:14:50'),
-(80, 5, '[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1]', '2020-07-22 15:43:40');
 
 -- --------------------------------------------------------
 
@@ -293,6 +276,13 @@ CREATE TABLE `short_question_mark` (
   `mark` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `short_question_mark`
+--
+
+INSERT INTO `short_question_mark` (`id`, `student`, `question_id`, `mark`) VALUES
+(10, 'hussain0296@gmail.com', 82, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -316,7 +306,7 @@ CREATE TABLE `student_register` (
 
 INSERT INTO `student_register` (`id`, `email`, `name`, `roll`, `class`, `section`, `password`, `approved`) VALUES
 (1, 'hussain0296@gmail.com', 'Ali Hussain', '47', 'Level 4 Term 2', 'A', '123', 1),
-(4, 'nakib143048@gmail.com', 'Nakib Hossain', '48', 'Level 4 Term 2', 'A', '123', 0),
+(4, 'nakib143048@gmail.com', 'Nakib Hossain', '48', 'Level 4 Term 2', 'A', '123', 1),
 (7, 'kalam@gmail.com', 'Kalam Khan', '15', 'Level 4 Term 1', 'A', '123', 0);
 
 -- --------------------------------------------------------
@@ -516,7 +506,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `answer_submit`
 --
 ALTER TABLE `answer_submit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
 
 --
 -- AUTO_INCREMENT for table `attendance_info`
@@ -528,13 +518,13 @@ ALTER TABLE `attendance_info`
 -- AUTO_INCREMENT for table `daily_attendance`
 --
 ALTER TABLE `daily_attendance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `exam_questions`
 --
 ALTER TABLE `exam_questions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `notice`
@@ -546,19 +536,19 @@ ALTER TABLE `notice`
 -- AUTO_INCREMENT for table `online_exam`
 --
 ALTER TABLE `online_exam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `online_exam_result`
 --
 ALTER TABLE `online_exam_result`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `pm`
 --
 ALTER TABLE `pm`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `qa_comment`
@@ -582,7 +572,7 @@ ALTER TABLE `qa_vote`
 -- AUTO_INCREMENT for table `resource`
 --
 ALTER TABLE `resource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `resource_comment`
@@ -600,7 +590,7 @@ ALTER TABLE `resource_vote`
 -- AUTO_INCREMENT for table `short_question_mark`
 --
 ALTER TABLE `short_question_mark`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `student_register`
@@ -612,13 +602,13 @@ ALTER TABLE `student_register`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `task_submit`
 --
 ALTER TABLE `task_submit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `teacher_register`

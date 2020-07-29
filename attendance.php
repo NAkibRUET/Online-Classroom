@@ -168,8 +168,11 @@
                 </div>
                 <?php
                 }
+
+                if($userType=='teacher'){
                 ?>
                 <a href="attendance.php?showArchive=1"><button class="btn btn-secondary" style="margin-left: 10%">Show Archive</button></a>
+            <?php } ?>
             </div>
             <?php
                 require_once('inc/chatbar.php');
