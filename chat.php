@@ -6,6 +6,8 @@
     $fl=0;
     if(isset($_GET['username'])){
     	$receiver_mail = $_GET['username'];
+    	$messageSeen = mysqli_query($con, "UPDATE `pm` SET `seen` = '1' WHERE `pm`.`sender` = '$receiver_mail' AND `pm`.`receiver` = '$user';");
+    	
     	$check = mysqli_query($con, "SELECT * FROM teacher_register WHERE email = '$receiver_mail'");
 		$check2 = mysqli_query($con, "SELECT * FROM student_register WHERE email = '$receiver_mail'");
 		if(mysqli_num_rows($check)>0){

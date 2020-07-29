@@ -48,7 +48,7 @@
 	}
     /*$receiver_user = $_SESSION['receiver_user'];*/
     /*$receiver_name = $_SESSION['receiver_name'];*/
-    $m_query = "SELECT * FROM pm WHERE (sender='$user' AND receiver = '$receiver_mail') OR (receiver ='$user' AND sender = '$receiver_mail') ORDER BY timestamp DESC;";
+    $m_query = "SELECT * FROM pm WHERE (sender='$user' AND receiver = '$receiver_mail') OR (receiver ='$user' AND sender = '$receiver_mail') ORDER BY id DESC;";
     $m_run = mysqli_query($con, $m_query);
        if(mysqli_num_rows($m_run)>0){
             while($m_row=mysqli_fetch_array($m_run)){
@@ -71,10 +71,10 @@
                 <li class="chat1"><h5 style=""><?php echo $message; ?></h5></li>
                 <?php
                             
-                        }
-
                     }
+
                 }
+            }
 ?>
 
 		

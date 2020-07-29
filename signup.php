@@ -21,7 +21,7 @@
 			</div>";	
 			}
 			else{
-				$qr = mysqli_query($con, "INSERT INTO `teacher_register` (`id`, `name`, `email`, `designation`, `password`) VALUES (NULL, '$nameOfTeacher', '$Temail', '$designation', '$pass');");
+				$qr = mysqli_query($con, "INSERT INTO `teacher_register`(`id`, `name`, `email`, `designation`, `password`, `approved`) VALUES (NULL, '$nameOfTeacher', '$Temail', '$designation', '$pass', 0);");
 				if($qr){
 					$msg = "<div class='alertSuccess'>
 						<i class='fa fa-check'></i> Successfully Registered, Please Login.
@@ -62,7 +62,7 @@
 			</div>";	
 			}
 			else{
-				$qr = mysqli_query($con, "INSERT INTO `student_register` (`id`, `email`, `name`, `roll`, `class`, `section`, `password`) VALUES (NULL, '$email', '$nameOfUser', '$roll', '$class', '$section', '$pass');");
+				$qr = mysqli_query($con, "INSERT INTO `student_register`(`id`, `email`, `name`, `roll`, `class`, `section`, `password`, `approved`)  VALUES (NULL, '$email', '$nameOfUser', '$roll', '$class', '$section', '$pass', 0);");
 				if($qr){
 					$msg = "<div class='alertSuccess'>
 						<i class='fa fa-check'></i> Successfully Registered, Please Login.

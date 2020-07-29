@@ -16,61 +16,111 @@
 		
 			$qr = "SELECT * FROM teacher_register WHERE email = '$email'";
 			$rn = mysqli_query($con,$qr);
-			$row = mysqli_fetch_array($rn);
+			if(mysqli_num_rows($rn)>0){
+				$row = mysqli_fetch_array($rn);
 
-			$db_user = $row['email'];
-			$db_pass = $row['password'];
-			if($db_user===$email){
+				$db_user = $row['email'];
+				$db_pass = $row['password'];
+				$approved = $row['approved'];
 				if($db_pass===$password){
-					$msg = "<div class='alertSuccess'>
-					<i class='fa fa-check'></i> Username and Password matched!
-			</div>";
-					$_SESSION['teacher']=$db_user;
-					header('Location: index.php');    
+					if($approved == 1){
+						$msg = "<div class='alertSuccess'>
+						<i class='fa fa-check'></i> Username and Password matched!
+						</div>";
+						$_SESSION['teacher']=$db_user;
+						header('Location: index.php');
+					}    
+					else{
+						$msg = "<div class='alertSuccess'>
+						<i class='fa fa-check'></i> Username and Password matched!
+						</div><div class='alertDanger'>
+						<i class='fa fa-check'></i> Your Account has not approved yet, Please Wait for Approval!
+						</div>";
+					}
 				}
 				else{
 					$msg = "<div class='alertDanger'>
 					<i class='fa fa-times'></i> Password Doesn't match!
-			</div>";
+					</div>";
 					
 				} 
 			}
 			else{
-				$msg = "<div class='alertDanger'>
-					<i class='fa fa-times'></i> Email Doesn't match!
-			</div>";
+					$msg = "<div class='alertDanger'>
+						<i class='fa fa-times'></i> Email Doesn't match!
+				</div>";
 			}
-
 		}
 		else if($userType == "Student"){
 		
 			$qr = "SELECT * FROM student_register WHERE email = '$email'";
 			$rn = mysqli_query($con,$qr);
-			$row = mysqli_fetch_array($rn);
+			if(mysqli_num_rows($rn)>0){
+				$row = mysqli_fetch_array($rn);
 
-			$db_user = $row['email'];
-			$db_pass = $row['password'];
-			if($db_user===$email){
+				$db_user = $row['email'];
+				$db_pass = $row['password'];
+				$approved = $row['approved'];
 				if($db_pass===$password){
-					$msg = "<div class='alertSuccess'>
-					<i class='fa fa-times'></i> Username and Password matched!
-			</div>";
-					$_SESSION['student']=$db_user;
-					header('Location: index.php');    
+					if($approved == 1){
+						$msg = "<div class='alertSuccess'>
+						<i class='fa fa-check'></i> Username and Password matched!
+						</div>";
+						$_SESSION['student']=$db_user;
+						header('Location: index.php');
+					}    
+					else{
+						$msg = "<div class='alertSuccess'>
+						<i class='fa fa-check'></i> Username and Password matched!
+						</div><div class='alertDanger'>
+						<i class='fa fa-check'></i> Your Account has not approved yet, Please Wait for Approval!
+						</div>";
+					}
 				}
 				else{
 					$msg = "<div class='alertDanger'>
 					<i class='fa fa-times'></i> Password Doesn't match!
-			</div>";
+					</div>";
 					
 				} 
+			
 			}
 			else{
-				$msg = "<div class='alertDanger'>
-					<i class='fa fa-times'></i> Email Doesn't match!
-			</div>";
+					$msg = "<div class='alertDanger'>
+						<i class='fa fa-times'></i> Email Doesn't match!
+				</div>";
 			}
-		
+		}
+		else if($userType == "Admin"){
+			echo "hh";
+			$qr = "SELECT * FROM `admin` WHERE email = '$email'";
+			$rn = mysqli_query($con,$qr);
+			if(mysqli_num_rows($rn)>0){
+				$row = mysqli_fetch_array($rn);
+
+				$db_user = $row['email'];
+				$db_pass = $row['password'];
+				
+				if($db_pass===$password){
+					$msg = "<div class='alertSuccess'>
+					<i class='fa fa-times'></i> Username and Password matched!
+					</div>";
+					$_SESSION['admin']=$db_user;
+					header('Location: admin.php');    
+				}
+				else{
+					$msg = "<div class='alertDanger'>
+					<i class='fa fa-times'></i> Password Doesn't match!
+					</div>";
+					
+				} 
+			
+			}
+			else{
+					$msg = "<div class='alertDanger'>
+						<i class='fa fa-times'></i> Email Doesn't match!
+				</div>";
+			}
 		}
 		
 	}
@@ -102,6 +152,7 @@
 				<select required id="userType" name="userType" class="form-control">
 					<option value="Teacher">Teacher</option>
 					<option value="Student">Student</option>
+					<option value="Admin">Admin</option>
 				</select>
 				<br>
 				

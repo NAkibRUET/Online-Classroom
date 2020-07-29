@@ -74,11 +74,13 @@
         <div class="row">
             <div class="col-md-10">
         		<div class="box90">
-        		 <h5 class="boxHeader">Share Resources:</h5>
+                   <button id="showButton" onclick="showForm()" type="button" style="float:right;" class="btn btn-outline-info"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    <button id="hideButton" onclick="hideForm()" type="button" style="float:right; display:none" class="btn btn-outline-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+        		   <h5 class="boxHeader">Share Resources:</h5>
                     <?php
                         if(isset($msg))echo $msg;
                     ?>
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" id="resourceForm" style="display:none">
                         <label style="color:blue;" for="title">Title:</label>
                         <input type="text" required id="title" name="rtitle" class="form-control" placeholder="Write a title for your resource">
                         <br>
@@ -181,6 +183,21 @@
             ?>
         </div>
 	</div>
+    <script>
+        
+        function showForm(){
+            document.getElementById("resourceForm").style.display = "block"
+            document.getElementById("hideButton").style.display = "block"
+            document.getElementById("showButton").style.display = "none"
+        }
+
+        function hideForm(){
+            document.getElementById("resourceForm").style.display = "none"
+            document.getElementById("hideButton").style.display = "none"
+            document.getElementById("showButton").style.display = "block"
+        }
+
+    </script>
 	<!--Please, place all your div/box/anything inside the above SECTION-->
 
 <?php

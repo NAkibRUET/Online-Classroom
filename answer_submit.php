@@ -20,8 +20,13 @@
 
 	if(isset($_POST['exam_id'])){
         
-        $ins_query="INSERT INTO `answer_submit` (`id`, `exam_id`, `question_id`, `student`, `answer`, `correct`) VALUES (NULL, '$exam_id', '$question_id', '$student', '$answer', '$correct');";
-        $run = mysqli_query($con,$ins_query);
-        
+        $checkDoubleSubmit = mysqli_num_rows(mysqli_query($con, "SELECT * FROM answer_submit WHERE exam_id = '$exam_id' AND question_id = '$question_id' AND student = '$student' "));
+        if($checkDoubleSubmit>0){
+        	echo "Already Submitted";
+        }
+        else{
+	        $ins_query="INSERT INTO `answer_submit` (`id`, `exam_id`, `question_id`, `student`, `answer`, `correct`) VALUES (NULL, '$exam_id', '$question_id', '$student', '$answer', '$correct');";
+	        $run = mysqli_query($con,$ins_query);
+        }
     }
 ?>

@@ -13,6 +13,7 @@
         $qaHeading = $row['title'];
         $qaDetails = $row['details'];
         $poster = $row['teacher'];
+        $TotalMark = $row['mark'];
         $filename = $row['filename'];
         $dealine_date = date('d M', strtotime($row['date']));
         $dealine_time = date('h:i A', strtotime($row['time']));
@@ -21,6 +22,7 @@
         $dt = $row['time'];
         $current_date = date('Y-m-d');
         $current_time = date('H:i:s');
+        $isArchived = $row['archived'];
         //echo $current_date;
         //echo $dd;
         //echo $dt;
@@ -96,11 +98,53 @@
         <div class="row">
             <div class="col-md-10">
         		<div class="box2nd90">
-        		  <h5 class="box2ndHeader">Deadline: <?php echo $dealine_date; ?> <?php echo $dealine_time; ?> </h5>
-                  <div style="padding: 20px;">
+                    
+                    <a href="delete.php?delete_type=task&task_id=<?php echo $task_id; ?>">
+                        <button 
+                            id="showButton" 
+                            type="button" 
+                            style="float:right;" 
+                            class="btn btn-danger" 
+                            data-toggle="tooltip" 
+                            data-placement="top" title="Delete">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </a>
+                    
+                    
+                    <a href="archive.php?archive_type=task&task_id=<?php echo $task_id; ?>">
+                        <button 
+                            id="showButton" 
+                            type="button" 
+                            style="float:right;" 
+                            class="btn btn-dark" 
+                            data-toggle="tooltip" 
+                            data-placement="top" 
+                            title="Archive" <?php if($isArchived == 1)echo "disabled"?>>
+                            <i class="fa fa-archive" aria-hidden="true"></i>
+                        </button>
+                    </a>
+                    
+                    <a href="task_update.php?id=<?php echo $task_id; ?>">
+                        <button 
+                            id="showButton" 
+                            type="button" 
+                            style="float:right;" 
+                            class="btn btn-success" 
+                            data-toggle="tooltip" 
+                            data-placement="top" 
+                            title="Edit">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                    </a>
+        		  
+                    <h5 class="box2ndHeader">Deadline: <?php echo $dealine_date; ?> <?php echo $dealine_time; ?> </h5>
+                    <div style="padding: 20px;">
+
                       <h3><?php echo $qaHeading;?></h3>
+
                       <h6 style='color:maroon; font-weight:bold;'><?php echo $poster_name ?></h6>
-                      
+                      <h6>Total Mark: <?php echo $TotalMark; ?></h6>
                       <div class="card">
                           <?php if(!empty($qaDetails)){ ?>
                           <div class="card-body">

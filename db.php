@@ -5,7 +5,7 @@
 	$dbuser="root";
 	//$dbpass="";
 	$dbpass="";
-	$dbname="classroom";
+	$dbname="onlineclassroom";
 	//$dbname="";
 	$con = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
 	

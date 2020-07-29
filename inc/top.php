@@ -23,6 +23,13 @@
 		$studentRoll = $row['roll'];
 		$ProfileId = $row['id'];
 	}
+	else if(isset($_SESSION['admin'])){
+		$userType = 'admin';
+		$user = $_SESSION['admin'];
+		$name = "Admin";	
+		
+		$ProfileId = "";
+	}
 	if(isset($name))$url_name = str_replace(" ", "-", $name);
 ?>
 <!DOCTYPE html>
@@ -36,6 +43,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 	<script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 	
   	<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
@@ -104,6 +112,7 @@
 			  <a href="attendance.php" class="nav_content">Attendance</a>
 			  <a href="resource.php" class="nav_content">Resources</a>
 			  <a href="qa.php" class="nav_content">Q & A</a>
+			  <a href="notice.php" class="nav_content">Notices</a>
 			  
 			  <!-- CODE FOR DROPDOWN IF NEEDED
 			  <div class="dropdownx">
