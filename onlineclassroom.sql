@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Jan 30, 2020 at 03:23 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
+-- Host: localhost
+-- Generation Time: Jul 29, 2020 at 04:19 PM
+-- Server version: 10.4.13-MariaDB
+-- PHP Version: 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,8 +18,28 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `classroom`
+-- Database: `onlineclassroom`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `Name` varchar(110) NOT NULL,
+  `email` varchar(110) NOT NULL,
+  `password` varchar(110) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `Name`, `email`, `password`) VALUES
+(1, 'Admin', 'admin@admin.com', 'admin123');
 
 -- --------------------------------------------------------
 
@@ -28,16 +47,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `answer_submit`
 --
 
-DROP TABLE IF EXISTS `answer_submit`;
-CREATE TABLE IF NOT EXISTS `answer_submit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `answer_submit` (
+  `id` int(11) NOT NULL,
   `exam_id` int(11) NOT NULL,
   `question_id` int(11) NOT NULL,
   `student` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correct` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `correct` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -45,22 +62,23 @@ CREATE TABLE IF NOT EXISTS `answer_submit` (
 -- Table structure for table `attendance_info`
 --
 
-DROP TABLE IF EXISTS `attendance_info`;
-CREATE TABLE IF NOT EXISTS `attendance_info` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `attendance_info` (
+  `id` int(11) NOT NULL,
   `teacher` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `class` varchar(110) COLLATE utf8mb4_unicode_ci NOT NULL,
   `section` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `session` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `archived` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `attendance_info`
 --
 
-INSERT INTO `attendance_info` (`id`, `teacher`, `class`, `section`) VALUES
-(5, 'boshir@gmail.com', 'Level 4 Term 2', 'A'),
-(6, 'boshir@gmail.com', 'Level 2 Term 2', 'B');
+INSERT INTO `attendance_info` (`id`, `teacher`, `class`, `section`, `session`, `archived`) VALUES
+(5, 'boshir@gmail.com', 'Level 4 Term 2', 'A', '2015-2016', 1),
+(7, 'boshir@gmail.com', 'Level 4 Term 2', 'A', '2014-15', 0),
+(8, 'boshir@gmail.com', 'Level 4 Term 1', 'A', '2016-17', 0);
 
 -- --------------------------------------------------------
 
@@ -68,21 +86,20 @@ INSERT INTO `attendance_info` (`id`, `teacher`, `class`, `section`) VALUES
 -- Table structure for table `daily_attendance`
 --
 
-DROP TABLE IF EXISTS `daily_attendance`;
-CREATE TABLE IF NOT EXISTS `daily_attendance` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `daily_attendance` (
+  `id` int(11) NOT NULL,
   `a_id` int(11) NOT NULL,
-  `data` json NOT NULL,
-  `date` timestamp NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`data`)),
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `daily_attendance`
 --
 
 INSERT INTO `daily_attendance` (`id`, `a_id`, `data`, `date`) VALUES
-(72, 5, '[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0]', '2020-01-18 18:14:50');
+(72, 5, '[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0]', '2020-01-18 18:14:50'),
+(80, 5, '[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1]', '2020-07-22 15:43:40');
 
 -- --------------------------------------------------------
 
@@ -90,10 +107,10 @@ INSERT INTO `daily_attendance` (`id`, `a_id`, `data`, `date`) VALUES
 -- Table structure for table `exam_questions`
 --
 
-DROP TABLE IF EXISTS `exam_questions`;
-CREATE TABLE IF NOT EXISTS `exam_questions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `exam_questions` (
+  `id` int(11) NOT NULL,
   `exam_id` int(11) NOT NULL,
+  `question_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `q_no` int(11) NOT NULL,
   `question` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `answer` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -101,9 +118,30 @@ CREATE TABLE IF NOT EXISTS `exam_questions` (
   `option2` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `option3` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `option4` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `end` time NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `end` time NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notice`
+--
+
+CREATE TABLE `notice` (
+  `id` int(11) NOT NULL,
+  `teacher` varchar(100) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `details` varchar(9000) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notice`
+--
+
+INSERT INTO `notice` (`id`, `teacher`, `title`, `details`, `timestamp`) VALUES
+(3, 'boshir@gmail.com', '5 including inspector injured from explosion at Pallabi Police Station', '<p><strong>Four police personnel and a staff of Pallabi Police Station were injured after a &#39;weight machine&#39; that they seized during a drive exploded inside the police station this morning, police said.</strong></p>\r\n\r\n<p>The injured are: Inspector (Operations) Imranul Islam (48), Sub-Inspectors Sajib Khan (30), Angkush Kumar (28) and Rumi Tabres Haider (28) and a police station staffer Mohammad Riaj (28).</p>\r\n\r\n<p>They were rushed to different hospitals in the capital. Riaj&#39;s condition is critical, said Walid Hossain, deputy commissioner (media) of Dhaka Metropolitan Police.&nbsp;</p>\r\n\r\n<p>According to the DC, a team of Pallabi Police Station yesterday arrested three criminals along with firearms and some other things including the weight machine.</p>\r\n\r\n<p>The machine was kept in the duty officer&#39;s room which exploded around 6:00am, said DC Walid.</p>\r\n', '2020-07-29 07:33:20'),
+(4, 'boshir@gmail.com', ' ভয় আর মামলাতে আটকে গেছে শিক্ষার্থীদের জীবন', '<p>দুই বছর আগে নিরাপদ সড়ক দাবির আন্দোলনে অন্যদের সঙ্গে অংশ নেন ঢাকা পলিটেকনিক ইনস্টিটিউটের শিক্ষার্থী তারিক আজিজ।&nbsp;</p>\r\n\r\n<p>আন্দোলন শেষ হওয়ার এক মাস পর ২০১৮ সালের সেপ্টেম্বরে টঙ্গীর বাসা থেকে তাঁকে গ্রেপ্তার করে ঢাকা মহানগর গোয়েন্দা পুলিশ (ডিবি)। এরপর জানতে পারেন, রাজধানীর বিভিন্ন থানায় তাঁর নামে নয়টি মামলা হয়েছে। গ্রেপ্তারের ১০ মাস পর জেল থেকে জামিনে ছাড়া পান তিনি।</p>\r\n\r\n<p>জেল থেকে আপাতত মুক্তি পেলেও ভোগান্তির শেষ হয়নি তারিকের। মামলার কারণে প্রতি মাসে নিয়মিত আদালতে হাজিরা দিতে হচ্ছে তাঁকে। গত সোমবার মুঠোফোনে তিনি&nbsp;<em>প্রথম আলো</em>কে বলেন, কোনো মাসের নয় দিনই চলে গেছে হাজিরা দেওয়ার জন্য আদালতে যাওয়া&ndash;আসা করতে করতে। জেলে থাকার কারণে দুটো সেমিস্টারের ফল খুব খারাপ হয়েছে। মনে হচ্ছে, ভয় আর মামলাতেই আটকে গেছে জীবন।</p>\r\n\r\n<p>২০১৮ সালের ২৯ জুলাই রাজধানীর বিমানবন্দর সড়কে বাসচাপায় শহীদ রমিজ উদ্দিন ক্যান্টনমেন্ট কলেজের দুই শিক্ষার্থী আবদুল করিম (রাজীব) ও দিয়া খানম (মীম) নিহত হওয়ার পর নিরাপদ সড়কের দাবিতে আন্দোলনে নামেন স্কুল&ndash;কলেজ ও বিশ্ববিদ্যালয়ের শিক্ষার্থীরা। ১০ দিন ধরে চলা ওই আন্দোলন ঘিরে শিক্ষার্থীসহ কয়েক শ ব্যক্তির নামে রাজধানীর বিভিন্ন থানায় ৬০টি মামলা হয়। এসব মামলার বেশির ভাগ আসামিই অজ্ঞাতনামা।</p>\r\n\r\n<p>তখন এসব মামলায় গ্রেপ্তার করে ৯৯ জনকে কারাগারে পাঠানো হয়। এঁদের মধ্যে ৫২ জন শিক্ষার্থী। এসব শিক্ষার্থী এখন জামিনে থাকলেও আদালতে হাজিরা দিতে হচ্ছে তাঁদের। তবে গত মার্চ মাস থেকে করোনার কারণে আদালতের নিয়মিত কার্যক্রম বন্ধ থাকায় আপাতত তাঁদের হাজিরা দিতে হচ্ছে না।</p>\r\n\r\n<p>আন্দোলনের মাঝপথে ২০১৮ সালের ৪ আগস্ট রাজধানীর জিগাতলায় ক্ষমতাসীন আওয়ামী লীগের সহযোগী সংগঠন ছাত্রলীগের নেতা&ndash;কর্মীদের নির্মম হামলার শিকার হন শিক্ষার্থীরা। এ ঘটনার প্রতিবাদে পরদিন শাহবাগ থেকে মিছিল নিয়ে শিক্ষার্থীরা ধানমন্ডির দিকে যেতে চাইলে সায়েন্স ল্যাবরেটরি মোড়সহ বিভিন্ন এলাকায় হামলার শিকার হন। সেদিন শিক্ষার্থীদের সঙ্গে পিটিয়ে রক্তাক্ত করা হয় ১২ জন সাংবাদিককেও। হামলাকারীদের অনেকের মুখ হেলমেটে ঢাকা থাকায় তারা হেলমেট বাহিনী নামে পরিচিতি পায়। দুই বছর হয়ে গেলেও হামলাকারীদের কারও বিরুদ্ধে এখন পর্যন্ত মামলা বা অন্য কোনো ব্যবস্থা নেওয়া হয়নি। সরকারের বিভিন্ন পর্যায় থেকে ওই সময়ে হামলাকারীদের গ্রেপ্তার ও বিচারের আশ্বাস দেওয়া হয়। কিছুদিন পর সরকার বিষয়টি &lsquo;ভুলে&rsquo; যায়।</p>\r\n\r\n<p>পুরো ঘটনার বিষয়ে জাতীয় মানবাধিকার কমিশনের চেয়ারম্যান নাসিমা বেগম&nbsp;<em>প্রথম আলো</em>কে বলেন, সবাইকে এভাবে ঝুলিয়ে রাখার তো মানে হয় না। নিরাপদ সড়ক আন্দোলনে অংশ নেওয়া শিক্ষার্থীদের বিরুদ্ধে করা মামলার বিষয়টি যাতে দ্রুত সুরাহা হয়, সেই তাগাদা দিয়ে তিনি শিগগিরই জননিরাপত্তাসচিবকে চিঠি দেবেন।</p>\r\n\r\n<p>জেল খেটে বেরিয়ে আসা নয়জন শিক্ষার্থীর সঙ্গে গত সপ্তাহে কথা বলেছে&nbsp;<em>প্রথম আলো</em>। তাঁরা বলছেন, অধিকাংশ মামলার বাদী পুলিশ। যে কারণে এসব মামলার প্রভাব ব্যক্তিজীবনে বহুমুখী। কেউ কেউ শিক্ষাজীবন শেষ করা নিয়ে অনিশ্চয়তায় রয়েছেন। কোনোভাবে শিক্ষাজীবন শেষ হলেও মামলার কারণে সরকারি চাকরি না পাওয়ার শঙ্কার কথা জানিয়েছেন কেউ কেউ। এ ছাড়া গোয়েন্দা প্রতিবেদনে মামলার তথ্য থাকায় পাসপোর্ট পাওয়া নিয়ে সমস্যায় পড়ার কথাও বলেছেন কয়েকজন। আবার তাঁদের অনেকের জন্য মামলার খরচ চালানো কঠিন হয়ে পড়েছে। তাঁরা বলছেন, যৌক্তিক আন্দোলনে অংশ নেওয়ার পরও এসব মামলা সম্পূর্ণ রাজনৈতিক উদ্দেশ্যে হয়েছে। মামলাগুলো থেকে তাঁরা অব্যাহতি চান।</p>\r\n\r\n<p>শিক্ষার্থীদের বিরুদ্ধে করা এসব মামলার বিষয়ে সরকারের কোনো সিদ্ধান্ত আছে কি না জানতে চাইলে ঢাকা মহানগর পুলিশ কমিশনার মো. শফিকুল ইসলাম&nbsp;<em>প্রথম আলো</em>কে বলেন, &lsquo;মামলাগুলো পেন্ডিং অবস্থায় আছে।&rsquo; নিষ্পত্তি বা প্রত্যাহারের বিষয়ে কোনো উদ্যোগ নেওয়া হবে কি না এমন প্রশ্নের জবাবে তিনি বলেন, &lsquo;আমার একক সিদ্ধান্তে তো নিষ্পত্তি হবে না বুঝতেই পারছেন। সিদ্ধান্ত আরও ওপর থেকে আসতে হবে। এ বিষয়ে এখনো কোনো সিদ্ধান্ত হয়নি।&rsquo;</p>\r\n\r\n<p>পুলিশের করা বিভিন্ন মামলার এজাহারের তথ্য অনুযায়ী, শিক্ষার্থীদের বিরুদ্ধে তখন দুই কারণে মামলা হয়। প্রথমত রাজপথে আন্দোলন করার কারণে। এ ক্ষেত্রে সরকারি কাজে বাধা দেওয়া, ভাঙচুরের অভিযোগ আনা হয় বেসরকারি বিশ্ববিদ্যালয়ের ২২ ছাত্রসহ শত শত শিক্ষার্থীর বিরুদ্ধে। দ্বিতীয়ত হলো সামাজিক যোগাযোগমাধ্যমে নিরাপদ সড়ক আন্দোলনের প্রচার চালানো। এ ছাড়া গুজব ছাড়ানো হয়েছে এমন অভিযোগও করে পুলিশ।</p>\r\n\r\n<p>এমনই একটি মামলায় কারাভোগ করে বেরিয়ে আসা সাউথইস্ট বিশ্ববিদ্যালয়ের শিক্ষার্থী জাহিদুল হক&nbsp;<em>প্রথম আলো</em>কে বলেন, &lsquo;মামলা চলতে থাকায় আর্থিক ও মানসিক সমস্যায় পড়েছেন তাঁরা। এখন পুলিশ দেখলেই ভয় লাগে। মনে হয় এই বুঝি গ্রেপ্তার করতে এল। এ ছাড়া পড়াশোনা প্রায় শেষের দিকে। চাকরির বাজারে কেউ মামলার আসামিকে নেবে কি না, সেটা নিয়েও দুশ্চিন্তা আছে। সব মিলিয়ে যেদিকেই তাকাই, সেদিকেই মামলাটাকে একটা বাধা মনে হচ্ছে।&rsquo;</p>\r\n\r\n<p>আন্দোলনের সময় শিক্ষার্থীদের অনেকের বিরুদ্ধে মামলার অন্যতম কারণ ছিল সামাজিক যোগাযোগমাধ্যমে স্ট্যাটাস দেওয়া ও ভিডিও শেয়ার করা। এ ক্ষেত্রে অভিযোগ আনা হয় ফেসবুক, টুইটার, ফেসবুক পেজ ও গ্রুপ, ইউটিউব, অনলাইন নিউজ পোর্টাল, ব্লগে বিভিন্ন উসকানিমূলক লেখা, পোস্ট, ফটো বা ভিডিওর মাধ্যমে আইনশৃঙ্খলা পরিস্থিতির অবনতি ঘটানোর। অভিযোগ ছিল গুজব ছড়ানোরও।</p>\r\n\r\n<p>তবে দুই বছর পার হয়ে গেলেও এখনো গুজবের উৎসের সন্ধান পায়নি পুলিশ। ডিএমপির সাইবার অপরাধ দমন বিভাগের উপকমিশনার এ এফ এম কিবরিয়া&nbsp;<em>প্রথম আলো</em>কে বলেন, যারা গুজব ছড়িয়েছিল, তাদের অনেককেই শনাক্ত করা হয়েছে। মামলাগুলো এখনো তদন্তাধীন রয়েছে।</p>\r\n\r\n<p>ওই সময় শুধু জিগাতলা, সায়েন্স ল্যাবরেটরি মোড়েই নয়, শিক্ষার্থীদের ওপর হামলা হয় মিরপুরেও। এ ছাড়া ইস্ট ওয়েস্ট বিশ্ববিদ্যালয়ের শিক্ষার্থীরা নিজ ক্যাম্পাসে অবরুদ্ধ অবস্থাতেই হামলার শিকার হন। এসব ঘটনায় ক্ষমতাসীন দলের সহযোগী সংগঠনের নেতা&ndash;কর্মীরা জড়িত। এ ছাড়া নর্থ সাউথ বিশ্ববিদ্যালয় এলাকাতে পুলিশের লাঠিপেটার শিকার হন শিক্ষার্থীরা।</p>\r\n\r\n<p>নিরাপদ সড়কের দাবিতে আন্দোলন করা শিক্ষার্থীদের বিরুদ্ধে হওয়া মামলাগুলোকে আইনের অপপ্রয়োগ ও অপব্যবহার বলে মনে করেন বিশিষ্ট আইনজীবী শাহদীন মালিক। তিনি&nbsp;<em>প্রথম আলো</em>কে বলেন, দু&ndash;একজনের বিরুদ্ধে যদি অকাট্য প্রমাণ পাওয়া যায়, তাহলে তাঁদের মামলাগুলোও দ্রুত নিষ্পত্তি করা উচিত। অন্য মামলাগুলো দীর্ঘায়িত না করে তুলে নেওয়াই বাঞ্ছনীয়। ইদানীং দেখা যাচ্ছে, কোনো ভিত্তি বা স্বল্প ভিত্তি না থাকলেও ফৌজদারি আইনের অপব্যবহার করে প্রতিবাদ মিছিল, আন্দোলন ও বিরুদ্ধ মতকে দমন করা হচ্ছে।</p>\r\n', '2020-07-29 07:39:53');
 
 -- --------------------------------------------------------
 
@@ -111,9 +149,8 @@ CREATE TABLE IF NOT EXISTS `exam_questions` (
 -- Table structure for table `online_exam`
 --
 
-DROP TABLE IF EXISTS `online_exam`;
-CREATE TABLE IF NOT EXISTS `online_exam` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `online_exam` (
+  `id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `subject` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `teacher` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -123,8 +160,10 @@ CREATE TABLE IF NOT EXISTS `online_exam` (
   `end` time NOT NULL,
   `date` date NOT NULL,
   `no_of_question` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `mark_per_mcq` int(11) NOT NULL,
+  `mark_per_sq` int(11) NOT NULL,
+  `archived` int(11) NOT NULL DEFAULT 0
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -132,14 +171,12 @@ CREATE TABLE IF NOT EXISTS `online_exam` (
 -- Table structure for table `online_exam_result`
 --
 
-DROP TABLE IF EXISTS `online_exam_result`;
-CREATE TABLE IF NOT EXISTS `online_exam_result` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `online_exam_result` (
+  `id` int(11) NOT NULL,
   `exam_id` int(11) NOT NULL,
   `student` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mark` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `mark` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -147,15 +184,14 @@ CREATE TABLE IF NOT EXISTS `online_exam_result` (
 -- Table structure for table `pm`
 --
 
-DROP TABLE IF EXISTS `pm`;
-CREATE TABLE IF NOT EXISTS `pm` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `pm` (
+  `id` int(11) NOT NULL,
   `sender` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `receiver` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `message` varchar(9000) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `timestamp` timestamp NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `seen` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -163,23 +199,14 @@ CREATE TABLE IF NOT EXISTS `pm` (
 -- Table structure for table `qa_comment`
 --
 
-DROP TABLE IF EXISTS `qa_comment`;
-CREATE TABLE IF NOT EXISTS `qa_comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `qa_comment` (
+  `id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `comment` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `commenter` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `commenterType` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time` timestamp NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `qa_comment`
---
-
-INSERT INTO `qa_comment` (`id`, `post_id`, `comment`, `commenter`, `commenterType`, `time`) VALUES
-(5, 17, '<pre>\r\n<code>The Solution is here\r\nspan {\r\n  float: right;\r\n  position: relative;\r\n  bottom:40px;\r\n}</code></pre>\r\n', 'hussain0296@gmail.com', 'student', '2020-01-20 22:52:22');
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -187,26 +214,15 @@ INSERT INTO `qa_comment` (`id`, `post_id`, `comment`, `commenter`, `commenterTyp
 -- Table structure for table `qa_post`
 --
 
-DROP TABLE IF EXISTS `qa_post`;
-CREATE TABLE IF NOT EXISTS `qa_post` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `qa_post` (
+  `id` int(11) NOT NULL,
   `title` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `userType` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `details` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time` timestamp NOT NULL,
-  `vote` int(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `qa_post`
---
-
-INSERT INTO `qa_post` (`id`, `title`, `user`, `userType`, `details`, `time`, `vote`) VALUES
-(19, 'why is the filed called \'video_file\' yet you\'re only allowing images.', 'hussain0296@gmail.com', 'student', '<p>why is the filed called &#39;video_file&#39; yet you&#39;re only allowing images.</p>\r\n', '2020-01-22 19:09:56', 0),
-(17, 'CSS background image to fit width, height should auto-scale in proportion', 'boshir@gmail.com', 'teacher', '<p>I have</p>\r\n\r\n<pre>\r\n<code>body {\r\n    background: url(images/background.svg);\r\n}</code></pre>\r\n\r\n<p>The desired effect is that this background image will have width equal to that of the page, height changing to maintain the proportion. e.g. if the original image happens to be 100*200 (any units) and the body is 600px wide, the background image should end up being 1200px high. The height should change automatically if the window is resized. Is this possible?</p>\r\n\r\n<p>At the moment, Firefox looks like it&#39;s making the height fit and then adjusting the width. Is this perhaps because the height is the longest dimension and it&#39;s trying to avoid cropping? I&nbsp;<em>want</em>&nbsp;to crop vertically, then scroll: no horizontal repeat.</p>\r\n\r\n<p>Also, Chrome is placing the image in the centre, no repeat, even when&nbsp;<code>background-repeat:repeat</code>&nbsp;is given explicitly, which is the default anyway.</p>\r\n', '2020-01-20 21:03:18', 3),
-(16, 'How do I give text or an image a transparent background using CSS?', 'hussain0296@gmail.com', 'student', '<p>Is it possible, using CSS only, to make the&nbsp;<code>background</code>&nbsp;of an element semi-transparent but have the content (text &amp; images) of the element opaque?</p>\r\n\r\n<p>I&#39;d like to accomplish this without having the text and the background as two separate elements.</p>\r\n\r\n<p>When trying:</p>\r\n\r\n<pre>\r\n<code>p {\r\n  position: absolute;\r\n  background-color: green;\r\n  filter: alpha(opacity=60);\r\n  opacity: 0.6;\r\n}\r\n\r\nspan {\r\n  color: white;\r\n  filter: alpha(opacity=100);\r\n  opacity: 1;\r\n}</code></pre>\r\n\r\n<pre>\r\n<code>&lt;p&gt;\r\n  &lt;span&gt;Hello world&lt;/span&gt;\r\n&lt;/p&gt;</code></pre>\r\n', '2020-01-20 21:01:24', 0);
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `vote` int(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -214,13 +230,11 @@ INSERT INTO `qa_post` (`id`, `title`, `user`, `userType`, `details`, `time`, `vo
 -- Table structure for table `qa_vote`
 --
 
-DROP TABLE IF EXISTS `qa_vote`;
-CREATE TABLE IF NOT EXISTS `qa_vote` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `qa_vote` (
+  `id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
-  `user` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `user` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -228,29 +242,16 @@ CREATE TABLE IF NOT EXISTS `qa_vote` (
 -- Table structure for table `resource`
 --
 
-DROP TABLE IF EXISTS `resource`;
-CREATE TABLE IF NOT EXISTS `resource` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `resource` (
+  `id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `filename` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `userType` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `resource`
---
-
-INSERT INTO `resource` (`id`, `title`, `description`, `type`, `url`, `filename`, `user`, `userType`) VALUES
-(8, 'hy is the filed called video_file yet youre only allowing images', '', 'PPT', '', 'attendanceTeacherView.png', 'hussain0296@gmail.com', 'student'),
-(7, 'Check file extension in upload form in PHP', 'I check the file extension for upload or not uploaded. My example methods worked, but now I need to understand if my methods (using pathinfo) is true. Is there another better and faster way?', 'PDF', '', 'Tahsin-Masrur-Cover-Letter.pdf', 'hussain0296@gmail.com', 'student'),
-(9, 'why is the filed called \'video_file\' yet you\'re only allowing images.', 'why is the filed called \'video_file\' yet you\'re only allowing images.', 'CSV', '', 'data.csv', 'hussain0296@gmail.com', 'student'),
-(10, 'Flow chart of selection sort', 'Flow chart of selection sort Flow chart of selection sort Flow chart of selection sort', 'Image', '', 'attendanceTeacherView2.png', 'nakib143048@gmail.com', 'student'),
-(11, 'Introduction To OOP PHP | Object Oriented PHP Tutorial For Beginners | PHP Tutorial |', 'Hi everyone! Welcome to my Object Oriented PHP tutorial course here on YouTube. In this course you will take your next step into PHP and learn how to create classes, objects, methods, etc. To help you become an expert in OOP PHP.\r\n\r\nLearn Procedural PHP here: https://www.youtube.com/watch?v=qVU3V...\r\n', 'Youtube Video', 'Anz0ArcQ5kI', '', 'boshir@gmail.com', 'teacher');
+  `userType` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -258,25 +259,14 @@ INSERT INTO `resource` (`id`, `title`, `description`, `type`, `url`, `filename`,
 -- Table structure for table `resource_comment`
 --
 
-DROP TABLE IF EXISTS `resource_comment`;
-CREATE TABLE IF NOT EXISTS `resource_comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `resource_comment` (
+  `id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `comment` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
   `commenter` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `commenterType` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `time` timestamp NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `resource_comment`
---
-
-INSERT INTO `resource_comment` (`id`, `post_id`, `comment`, `commenter`, `commenterType`, `time`) VALUES
-(6, 9, '<p>Very Useful Resource</p>\r\n', 'hussain0296@gmail.com', 'student', '2020-01-22 19:23:45'),
-(7, 10, '<p>Nice Post</p>\r\n', 'nakib143048@gmail.com', 'student', '2020-01-22 19:33:03'),
-(8, 11, '<h2><strong>This was very useful video to learn about object oriented php</strong></h2>\r\n', 'hussain0296@gmail.com', 'student', '2020-01-22 19:42:47');
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -284,13 +274,24 @@ INSERT INTO `resource_comment` (`id`, `post_id`, `comment`, `commenter`, `commen
 -- Table structure for table `resource_vote`
 --
 
-DROP TABLE IF EXISTS `resource_vote`;
-CREATE TABLE IF NOT EXISTS `resource_vote` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `resource_vote` (
+  `id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
-  `user` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `user` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `short_question_mark`
+--
+
+CREATE TABLE `short_question_mark` (
+  `id` int(11) NOT NULL,
+  `student` varchar(100) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `mark` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -298,25 +299,25 @@ CREATE TABLE IF NOT EXISTS `resource_vote` (
 -- Table structure for table `student_register`
 --
 
-DROP TABLE IF EXISTS `student_register`;
-CREATE TABLE IF NOT EXISTS `student_register` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `student_register` (
+  `id` int(11) NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `roll` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `class` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `section` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `approved` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `student_register`
 --
 
-INSERT INTO `student_register` (`id`, `email`, `name`, `roll`, `class`, `section`, `password`) VALUES
-(1, 'hussain0296@gmail.com', 'Ali Hussain', '68', 'Level 4 Term 2', 'A', '123'),
-(4, 'nakib143048@gmail.com', 'Nakib Hossain', '48', 'Level 4 Term 2', 'A', '123');
+INSERT INTO `student_register` (`id`, `email`, `name`, `roll`, `class`, `section`, `password`, `approved`) VALUES
+(1, 'hussain0296@gmail.com', 'Ali Hussain', '47', 'Level 4 Term 2', 'A', '123', 1),
+(4, 'nakib143048@gmail.com', 'Nakib Hossain', '48', 'Level 4 Term 2', 'A', '123', 0),
+(7, 'kalam@gmail.com', 'Kalam Khan', '15', 'Level 4 Term 1', 'A', '123', 0);
 
 -- --------------------------------------------------------
 
@@ -324,9 +325,8 @@ INSERT INTO `student_register` (`id`, `email`, `name`, `roll`, `class`, `section
 -- Table structure for table `task`
 --
 
-DROP TABLE IF EXISTS `task`;
-CREATE TABLE IF NOT EXISTS `task` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `task` (
+  `id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `details` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `class` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -335,18 +335,9 @@ CREATE TABLE IF NOT EXISTS `task` (
   `time` time NOT NULL,
   `teacher` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `task`
---
-
-INSERT INTO `task` (`id`, `title`, `details`, `class`, `filename`, `date`, `time`, `teacher`, `publish`) VALUES
-(6, 'Flow chart of selection sort', 'Flow chart of selection sort', 'Level 1 Term 2', 'fouradja.m', '2020-12-12', '12:13:00', 'boshir@gmail.com', '1'),
-(7, 'why is the filed called \'video_file\' yet you\'re only allowing images.', '', 'Level 4 Term 2', 'madja.m', '2020-10-10', '10:20:00', 'boshir@gmail.com', '1'),
-(8, 'Assignment on Virus', 'Find out details about the viruses mentioned in the file', 'Level 4 Term 2', 'NEIGH_CONN.pdf', '2020-02-20', '23:59:00', 'boshir@gmail.com', '1'),
-(9, 'PHP get timestamp from separate date and time\r\n', '', 'Level 4 Term 2', '[HorribleSubs] Ace of Diamond Act II - 38 [480p].mkv[www.torrentbd.net].torrent', '2012-12-12', '01:21:00', 'boshir@gmail.com', '0');
+  `archived` int(11) NOT NULL,
+  `mark` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -354,24 +345,13 @@ INSERT INTO `task` (`id`, `title`, `details`, `class`, `filename`, `date`, `time
 -- Table structure for table `task_submit`
 --
 
-DROP TABLE IF EXISTS `task_submit`;
-CREATE TABLE IF NOT EXISTS `task_submit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `task_submit` (
+  `id` int(11) NOT NULL,
   `task_id` int(11) NOT NULL,
   `student` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `file_name` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mark` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `task_submit`
---
-
-INSERT INTO `task_submit` (`id`, `task_id`, `student`, `file_name`, `mark`) VALUES
-(3, 7, 'hussain0296@gmail.com', '[TorrentBD]Aiseesoft PDF to Word Converter 3.2.32 Multilingual + Reg.torrent', '10'),
-(5, 7, 'nakib143048@gmail.com', '.picasa.ini', '15'),
-(6, 8, 'nakib143048@gmail.com', 'BS 23 Viva.png', '10');
+  `mark` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -379,25 +359,272 @@ INSERT INTO `task_submit` (`id`, `task_id`, `student`, `file_name`, `mark`) VALU
 -- Table structure for table `teacher_register`
 --
 
-DROP TABLE IF EXISTS `teacher_register`;
-CREATE TABLE IF NOT EXISTS `teacher_register` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `teacher_register` (
+  `id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `designation` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `approved` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `teacher_register`
 --
 
-INSERT INTO `teacher_register` (`id`, `name`, `email`, `designation`, `password`) VALUES
-(1, 'Boshir Ahmed', 'boshir@gmail.com', 'Professor', '123'),
-(2, 'Adil Ali', 'adil@adil.com', 'Lecturer', '123'),
-(3, 'Rizoan Toufiq', 'rt@gmail.com', 'Lecturer', '123'),
-(4, 'Asif Hossain', 'asif@gmail.com', 'Lecturer', '123');
+INSERT INTO `teacher_register` (`id`, `name`, `email`, `designation`, `password`, `approved`) VALUES
+(1, 'Boshir Ahmed', 'boshir@gmail.com', 'Professor', '123', 1),
+(2, 'Adil Ali', 'adil@adil.com', 'Lecturer', '123', 1),
+(3, 'Rizoan Toufiq', 'rt@gmail.com', 'Lecturer', '123', 0),
+(10, 'Abul Khan', 'abul@gmail.com', 'Professor', '123', 0);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `answer_submit`
+--
+ALTER TABLE `answer_submit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `attendance_info`
+--
+ALTER TABLE `attendance_info`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `daily_attendance`
+--
+ALTER TABLE `daily_attendance`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `exam_questions`
+--
+ALTER TABLE `exam_questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notice`
+--
+ALTER TABLE `notice`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `online_exam`
+--
+ALTER TABLE `online_exam`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `online_exam_result`
+--
+ALTER TABLE `online_exam_result`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pm`
+--
+ALTER TABLE `pm`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `qa_comment`
+--
+ALTER TABLE `qa_comment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `qa_post`
+--
+ALTER TABLE `qa_post`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `qa_vote`
+--
+ALTER TABLE `qa_vote`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `resource`
+--
+ALTER TABLE `resource`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `resource_comment`
+--
+ALTER TABLE `resource_comment`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `resource_vote`
+--
+ALTER TABLE `resource_vote`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `short_question_mark`
+--
+ALTER TABLE `short_question_mark`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `student_register`
+--
+ALTER TABLE `student_register`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `task`
+--
+ALTER TABLE `task`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `task_submit`
+--
+ALTER TABLE `task_submit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `teacher_register`
+--
+ALTER TABLE `teacher_register`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `answer_submit`
+--
+ALTER TABLE `answer_submit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=261;
+
+--
+-- AUTO_INCREMENT for table `attendance_info`
+--
+ALTER TABLE `attendance_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `daily_attendance`
+--
+ALTER TABLE `daily_attendance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+
+--
+-- AUTO_INCREMENT for table `exam_questions`
+--
+ALTER TABLE `exam_questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
+--
+-- AUTO_INCREMENT for table `notice`
+--
+ALTER TABLE `notice`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `online_exam`
+--
+ALTER TABLE `online_exam`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT for table `online_exam_result`
+--
+ALTER TABLE `online_exam_result`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `pm`
+--
+ALTER TABLE `pm`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `qa_comment`
+--
+ALTER TABLE `qa_comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `qa_post`
+--
+ALTER TABLE `qa_post`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `qa_vote`
+--
+ALTER TABLE `qa_vote`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `resource`
+--
+ALTER TABLE `resource`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `resource_comment`
+--
+ALTER TABLE `resource_comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `resource_vote`
+--
+ALTER TABLE `resource_vote`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `short_question_mark`
+--
+ALTER TABLE `short_question_mark`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `student_register`
+--
+ALTER TABLE `student_register`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `task`
+--
+ALTER TABLE `task`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `task_submit`
+--
+ALTER TABLE `task_submit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `teacher_register`
+--
+ALTER TABLE `teacher_register`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
