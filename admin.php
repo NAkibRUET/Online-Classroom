@@ -29,7 +29,7 @@
                       </thead>
                       <tbody>
                 <?php
-
+                        $i=0;
                         $student_info = mysqli_query($con, "SELECT * FROM student_register WHERE approved = 0");
                         while($row = mysqli_fetch_array($student_info)){
                             $student_name = $row['name'];
@@ -37,10 +37,10 @@
                             $student_email = $row['email'];
                             $student_class = $row['class'];
                             $student_section = $row['section'];
-
+                            $i++;
                 ?>
                         <tr>
-                          <th scope="row">1</th>
+                          <th scope="row"><?php echo $i; ?></th>
                           <td><?php echo $student_name; ?></td>
                           <td><?php echo $student_roll; ?></td>
                           <td><?php echo $student_email; ?></td>
@@ -96,7 +96,7 @@
                       </thead>
                       <tbody>
                 <?php
-
+                        $i=0;
                         $student_info = mysqli_query($con, "SELECT * FROM teacher_register WHERE approved = 0");
                         while($row = mysqli_fetch_array($student_info)){
                             $teacher_name = $row['name'];
@@ -104,10 +104,10 @@
                             $teacher_email = $row['email'];
                             
                             $teacher_designation = $row['designation'];
-
+                            $i++;
                 ?>
                         <tr>
-                          <th scope="row">1</th>
+                          <th scope="row"><?php echo $i;? ></th>
                           <td><?php echo $teacher_name; ?></td>
                           
                           <td><?php echo $teacher_email; ?></td>
