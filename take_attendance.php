@@ -699,7 +699,7 @@
                     <h6 style="font-weight: bold;">Section: <?php echo $section; ?></h6>
                     <hr>
                     <h6 style="font-weight: bold;">Your Name: <?php echo $name; ?></h6>
-                    <h6 style="font-weight: bold;">Your Attendance Percentage: <?php echo $avrage[$studentRoll-1]*100 ?> %</h6>
+                    <h6 style="font-weight: bold;">Your Attendance Percentage: <?php if(isset($avrage[$studentRoll-1])){ echo $avrage[$studentRoll-1]*100;} ?> %</h6>
                     <table>
                         <tr>
                             <th>Date</th>
@@ -723,11 +723,11 @@
 
                                 $j++;
                             }
-                            if($attendance_array[$studentRoll-1]==1)
+                            //if($attendance_array[$studentRoll-1]==1)
                 ?>
                         <tr>
                             <td><?php echo $date; ?></td>
-                            <td><?php if($attendance_array[$studentRoll-1]==1){echo "<span style='color:green'>Present</span>";} else{echo "<span style='color:red'>Absent</span>";} ?></td>
+                            <td><?php if(isset($attendance_array[$studentRoll-1])){ if($attendance_array[$studentRoll-1]==1){echo "<span style='color:green'>Present</span>";} else{echo "<span style='color:red'>Absent</span>";}} ?></td>
 
                         </tr>
 
