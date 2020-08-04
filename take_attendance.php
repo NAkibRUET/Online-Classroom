@@ -25,7 +25,7 @@
     
     $msg = "";
     if(isset($_POST['submitAttendence'])){
-        $qq = mysqli_query($con, "SELECT * FROM `daily_attendance` WHERE DATE(`date`) = CURDATE()");
+        $qq = mysqli_query($con, "SELECT * FROM `daily_attendance` WHERE a_id='$a_id' AND DATE(`date`) = CURDATE()");
         if(mysqli_num_rows($qq)>0){
             $msg = "<h5 style='color:red'>You have already taken todays attendance</h5>";
         }
@@ -46,7 +46,7 @@
     }
     
     $i=0;
-    $qr = mysqli_query($con, "SELECT * FROM daily_attendance");
+    $qr = mysqli_query($con, "SELECT * FROM daily_attendance WHERE a_id = '$a_id'");
     while($row = mysqli_fetch_array($qr)){
         $i = $i + 1;
         $yourArray = json_decode($row['data']);
